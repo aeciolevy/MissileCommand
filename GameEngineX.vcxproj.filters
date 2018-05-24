@@ -73,6 +73,15 @@
     <ClInclude Include="Game\Public\Factory.h">
       <Filter>Source Files\Game\HeaderFiles</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Public\HashMap.h">
+      <Filter>Source Files\Game\HeaderFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Public\GameObjectHandle.h">
+      <Filter>Source Files\Game\HeaderFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Public\GameObjectInventory.h">
+      <Filter>Source Files\Game\HeaderFiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\Private\Main.cpp">

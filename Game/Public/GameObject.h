@@ -60,6 +60,8 @@ public:
 	void Initialize();
 	void AddComponent(Component* pComponent);
 	
+	//GameObjectHandle GetHandle();
+
 	template<class T>
 	T* FindComponent(ComponentType eType)
 	{
