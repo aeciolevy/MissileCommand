@@ -6,6 +6,8 @@
 #include "Game\Public\COGPhysics.h"
 #include <iostream>
 
+//std::hash<std::string> s_hash;
+
 enum class GameObjectType : int
 {
 	City = 0,
@@ -64,8 +66,4 @@ public:
 		return city;
 	}
 
-
-private:
-
-	
 };

@@ -35,8 +35,6 @@ public:
 	virtual void Render() override
 	{
 		 mEngine->DrawBox(GetVertex1(), GetVertex2(), mColor, 2);
-
-	
 	}
 
 private:
