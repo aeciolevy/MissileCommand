@@ -22,6 +22,6 @@ public:
 private:
 
 	Factory*						mFactory;
-	std::vector<GameObject*>		mGameObjects;
+	std::vector<GameObjectHandle>		mGameObjects;
 	exEngineInterface*				mEngine;
 };
