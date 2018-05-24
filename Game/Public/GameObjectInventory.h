@@ -1,11 +1,13 @@
 #pragma once
 #include "Game/Public/HashMap.h"
+#include "Game/Public/Singleton.h"
 
 class GameObject;
 
-class GameObjectInventory
+class GameObjectInventory : public Singleton<GameObjectInventory>
 {
 public:
+	friend class Singleton<GameObjectInventory>;
 
 	void Register(GameObject* pGO)
 	{
@@ -35,3 +37,5 @@ public:
 private:
 	HashMap<GameObject*, 256> mMap;
 }; 
+
+GameObjectInventory* Singleton<GameObjectInventory>::mSingleton = nullptr;

@@ -10,18 +10,11 @@ World::World(exEngineInterface* pEngine)
 void World::Initialize()
 {
 	GameObject* city = mFactory->CreateGameObject(mEngine, { 50.0f, 590.0f }, GameObjectType::City);
-	// mGameObjects.push_back(city->GetHandle()); << the future
-	mGameObjects.push_back(city);
+	mGameObjects.push_back(city->GetHandle());
 }
 
 void World::Destroy()
 {
-	for (GameObject* pGameObject : mGameObjects)
-	{
-		delete pGameObject;
-	}
-
-	mGameObjects.clear();
 }
 
 void World::Update(float fDeltaT)

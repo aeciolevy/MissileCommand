@@ -171,6 +171,7 @@
     <ClCompile Include="Game\Private\Factory.cpp" />
     <ClCompile Include="Game\Private\Game.cpp" />
     <ClCompile Include="Game\Private\GameObject.cpp" />
+    <ClCompile Include="Game\Private\GameObjectHandle.cpp" />
     <ClCompile Include="Game\Private\Main.cpp" />
     <ClCompile Include="Game\Private\Output.cpp" />
     <ClCompile Include="Game\Private\ScoreManager.cpp" />
