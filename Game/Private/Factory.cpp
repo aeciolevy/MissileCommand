@@ -30,3 +30,30 @@ GameObject* Factory::CreateCity(Hash hash, exEngineInterface* pEngine, exVector2
 
 	return city;
 }
+
+GameObject* Factory::CreateBase(Hash hash, exEngineInterface* pEngine, exVector2 startPosition)
+{
+	const float BASE_WIDTH = 25.0f;
+	const float BASE_HEIGHT = 10.0f;
+
+	exColor baseColor;
+	baseColor.mColor[0] = 128;
+	baseColor.mColor[1] = 1;
+	baseColor.mColor[2] = 196;
+	baseColor.mColor[3] = 255;
+
+	GameObject* base = new GameObject(hash);
+
+	COGTransform* pTransform = new COGTransform(base, startPosition);
+	base->AddComponent(pTransform);
+
+	COGBoxShape* pBoxShape = new COGBoxShape(pEngine, base, BASE_WIDTH, BASE_HEIGHT, baseColor);
+	base->AddComponent(pBoxShape);
+
+	COGPhysics* pPhysics = new COGPhysics(base, true);
+	base->AddComponent(pPhysics);
+
+	base->Initialize();
+
+	return base;
+}
