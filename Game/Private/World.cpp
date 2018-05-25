@@ -10,6 +10,7 @@ World::World(exEngineInterface* pEngine)
 void World::Initialize()
 {
 	GameObject* city = mFactory->CreateGameObject(mEngine, { 50.0f, 590.0f }, GameObjectType::City);
+	GameObject* base = mFactory->CreateGameObject(mEngine, { 10.0f, 590.0f }, GameObjectType::Base);
 	mGameObjects.push_back(city->GetHandle());
 }
 

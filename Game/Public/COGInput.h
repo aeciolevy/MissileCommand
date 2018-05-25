@@ -8,10 +8,9 @@ public:
 	static std::vector<COGInput*> mInputComponents;
 public:
 
-	COGInput(GameObject* pGO, COGTransform* pTransform, PaddleIdentifier paddle)
+	COGInput(GameObject* pGO, COGTransform* pTransform)
 		: Component(pGO)
 	{
-		mPaddle = paddle;
 		mTransform = pTransform;
 		mPosition = pTransform->GetPosition();
 		mVelocity = 80.0f;
@@ -31,11 +30,14 @@ public:
 
 	virtual void Update(float DeltaTime);
 
+	virtual bool MouseClick(int nScancode);
+
 private:
 
 	exVector2					mPosition;
+	exVector2					mMousePosition;
+	int							mMouseLeft;
 	COGTransform *				mTransform;
-	PaddleIdentifier				mPaddle;
 	float						mVelocity;
 
 

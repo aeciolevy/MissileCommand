@@ -2,11 +2,16 @@
 
 std::vector<COGInput*> COGInput::mInputComponents;
 
-bool isButtonDown(int nScancode)
+bool COGInput::MouseClick(int nScancode)
 {
-	int nKeys = 0;
-	const Uint8 *pState = SDL_GetKeyboardState(&nKeys);
-	return pState[nScancode];
+	int x, y;
+	unsigned int r = SDL_GetMouseState(&x, &y);
+
+	mMousePosition.x = (float)x;
+	mMousePosition.y = (float)y;
+
+	mMouseLeft = r & SDL_BUTTON(SDL_BUTTON_LEFT);
+	return (bool) mMouseLeft;
 }
 
 
@@ -14,7 +19,7 @@ void COGInput::Update(float DeltaTime)
 {
 	mPosition = mTransform->GetPosition();
 	// Move Paddle  with WS
-	if (mPaddle == PaddleIdentifier::PaddleRight)
+	/*if (mPaddle == PaddleIdentifier::PaddleRight)
 	{
 		if (isButtonDown(SDL_SCANCODE_UP) && mPosition.y > kViewPortHeightMin + 10.0f)
 		{
@@ -40,6 +45,6 @@ void COGInput::Update(float DeltaTime)
 			float temp = (mVelocity * DeltaTime);
 			mTransform->SetPosition(temp);
 		}
-	}
+	}*/
 
 }

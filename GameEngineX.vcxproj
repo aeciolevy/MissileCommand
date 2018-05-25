@@ -149,6 +149,7 @@
     <ClInclude Include="Game\Public\COGBoxShape.h" />
     <ClInclude Include="Game\Public\COGCircleShape.h" />
     <ClInclude Include="Game\Public\COGInput.h" />
+    <ClInclude Include="Game\Public\COGLineShape.h" />
     <ClInclude Include="Game\Public\COGPhysics.h" />
     <ClInclude Include="Game\Public\COGShape.h" />
     <ClInclude Include="Game\Public\COGTransform.h" />
