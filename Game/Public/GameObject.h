@@ -16,6 +16,7 @@ enum class ComponentType : int
 	Physics,
 	BoxShape,
 	CircleShape,
+	LineShape,
 	Bounce, 
 	Input
 };

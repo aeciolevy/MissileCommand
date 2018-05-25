@@ -7,6 +7,7 @@
 #include "Game\Public\COGTransform.h"
 #include "Game\Public\COGBoxShape.h"
 #include "Game\Public\COGPhysics.h"
+#include "Game\Public\COGLineShape.h"
 
 
 extern std::hash<std::string> s_hash;
@@ -45,4 +46,5 @@ public:
 
 	GameObject* CreateCity(Hash hash, exEngineInterface* pEngine, exVector2 startPosition);
 	GameObject* CreateBase(Hash hash, exEngineInterface* pEngine, exVector2 startPosition);
+	GameObject* CreateFriendMissile(Hash hash, exEngineInterface* pEngine, exVector2 startPosition);
 };

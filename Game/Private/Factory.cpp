@@ -57,3 +57,27 @@ GameObject* Factory::CreateBase(Hash hash, exEngineInterface* pEngine, exVector2
 
 	return base;
 }
+
+GameObject* Factory::CreateFriendMissile(Hash hash, exEngineInterface* pEngine, exVector2 startPosition)
+{
+	exColor missileColor;
+	missileColor.mColor[0] = 128;
+	missileColor.mColor[1] = 1;
+	missileColor.mColor[2] = 196;
+	missileColor.mColor[3] = 255;
+
+	GameObject* missile = new GameObject(hash);
+
+	COGTransform* pTransform = new COGTransform(missile, startPosition);
+	missile->AddComponent(pTransform);
+
+	COGLineShape* pLineShape = new COGLineShape(pEngine, missile, startPosition, missileColor);
+	missile->AddComponent(pLineShape);
+
+	COGPhysics* pPhysics = new COGPhysics(missile, true);
+	missile->AddComponent(pPhysics);
+
+	missile->Initialize();
+
+	return missile;
+}
