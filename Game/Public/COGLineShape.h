@@ -12,7 +12,7 @@ public:
 	{
 		mEngine = pEngine;
 		mTransform = pGO->FindComponent<COGTransform>(ComponentType::Transform);
-		mStartPos = startPosition;
+		mStartPos = mTransform->GetPosition();
 		mColor = missileColor;
 	}
 
@@ -20,6 +20,7 @@ public:
 
 	virtual void Render() override
 	{
+		mFinalPos = mTransform->GetFinalPos();
 		mEngine->DrawLine(mStartPos, mFinalPos, mColor, 2);
 	}
 

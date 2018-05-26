@@ -27,6 +27,11 @@ struct exVector2
 		return uVector;
 	}
 
+	exVector2 GetVector(exVector2 finalPosition)
+	{
+		return { finalPosition.x - x, finalPosition.y - y };
+	}
+
 	float Dot(exVector2 vec1)
 	{
 		return vec1.x * x + vec1.y * y;

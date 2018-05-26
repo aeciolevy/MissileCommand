@@ -1,14 +1,14 @@
+#pragma once
 #include "Game\Public\GameObject.h"
 #include "Game\Public\COGTransform.h"
-#include "Engine/Public/SDL.h"
 
-class COGInput : public Component
+class COGController : public Component
 {
 public:
-	static std::vector<COGInput*> mInputComponents;
+	static std::vector<COGController*> mControllerComponents;
 public:
 
-	COGInput(GameObject* pGO, COGTransform* pTransform)
+	COGController(GameObject* pGO, COGTransform* pTransform)
 		: Component(pGO)
 	{
 		mTransform = pTransform;
@@ -20,23 +20,27 @@ public:
 
 	virtual void Initialize() override
 	{
-		AddToComponentVector(mInputComponents);
+		AddToComponentVector(mControllerComponents);
 	}
 
 	virtual void Destroy() override
 	{
-		RemoveFromComponentVector(mInputComponents);
+		RemoveFromComponentVector(mControllerComponents);
 	}
+
+	void SetVectorToMissile(exVector2 finalPosition);
+
+	bool ReachFinalPosition();
 
 	virtual void Update(float DeltaTime);
 
-	virtual bool MouseClick(int nScancode);
 
 private:
 
+	exVector2					mFinalPosition;
 	exVector2					mPosition;
-	exVector2					mMousePosition;
-	int							mMouseLeft;
+	exVector2					mUnitVector;
+	exVector2					mDirection;
 	COGTransform *				mTransform;
 	float						mVelocity;
 

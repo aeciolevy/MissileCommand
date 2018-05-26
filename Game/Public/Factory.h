@@ -7,6 +7,7 @@
 #include "Game\Public\COGTransform.h"
 #include "Game\Public\COGBoxShape.h"
 #include "Game\Public\COGPhysics.h"
+#include "Game\Public\COGController.h"
 #include "Game\Public\COGLineShape.h"
 
 
@@ -44,7 +45,19 @@ public:
 		}
 	}
 
+	GameObject* CreateMissiles(exEngineInterface* pEngine, exVector2 startPosition, exVector2 finalPosition, GameObjectType gameType) {
+		GameObject* newGameObject;
+		switch (gameType)
+		{
+		case GameObjectType::MissileFriend:
+			return newGameObject = CreateFriendMissile(s_hash("Missile"), pEngine, startPosition, finalPosition);
+		default:
+			std::cout << "Wrong type" << std::endl;
+			return nullptr;
+		}
+	}
+
 	GameObject* CreateCity(Hash hash, exEngineInterface* pEngine, exVector2 startPosition);
 	GameObject* CreateBase(Hash hash, exEngineInterface* pEngine, exVector2 startPosition);
-	GameObject* CreateFriendMissile(Hash hash, exEngineInterface* pEngine, exVector2 startPosition);
+	GameObject* CreateFriendMissile(Hash hash, exEngineInterface* pEngine, exVector2 startPosition, exVector2 finalPosition);
 };
