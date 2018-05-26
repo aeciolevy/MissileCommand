@@ -47,8 +47,5 @@ private:
 	float						mVelocity;
 	bool						mFinish;
 	GameObject*					mGO;
-
-
-
-
 };
+

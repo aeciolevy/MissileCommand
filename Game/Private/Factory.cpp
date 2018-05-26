@@ -86,3 +86,23 @@ GameObject* Factory::CreateFriendMissile(Hash hash, exEngineInterface* pEngine, 
 
 	return missile;
 }
+
+void Factory::addToStaleList(GameObject* gameObject)
+{
+	if (gameObject->GetHandle().IsValid())
+	{
+		mStaleGameObjects.push_back(gameObject);
+	}
+}
+
+void Factory::cleanStaleList()
+{
+	if (mStaleGameObjects.size() > 0)
+	{
+		for (int i = 0; i < (int)mStaleGameObjects.size(); ++i)
+		{
+			GameObjectInventory::Instance()->Unregister(mStaleGameObjects[i]);
+			mStaleGameObjects.erase(mStaleGameObjects.begin() + i);
+		}
+	}
+}

@@ -14,6 +14,11 @@ public:
 	bool IsValid() const;
 	GameObject* Get() const;
 
+	void SetHash(Hash hash)
+	{
+		mHash = hash;
+	}
+
 private:
 	GameObjectInventory * mInventory;
 };

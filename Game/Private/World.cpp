@@ -2,19 +2,26 @@
 #include "Game\Public\Factory.h"
 #include "Engine/Public/SDL.h"
 
+extern std::hash<std::string> s_hash;
+
 World::World(exEngineInterface* pEngine)
 {
 	mEngine = pEngine;
 	mFactory = Factory::Instance();
+	mCities = 6;
+	mMouseLeft = 0;
 }
 
 void World::Initialize()
 {
-	GameObject* city = mFactory->CreateGameObject(mEngine, { 50.0f, 590.0f }, GameObjectType::City);
-	mGameObjects.push_back(city->GetHandle());
+	for (int i = 0; i < mCities; i++)
+	{
+		GameObject* city = mFactory->CreateGameObject(mEngine, { 50.0f, 590.0f }, GameObjectType::City);
+		mGameObjects.push_back(city->GetHandle());
+	}
 }
 
-bool World::MouseClick()
+void World::MouseClick()
 {
 	int x, y;
 	unsigned int r = SDL_GetMouseState(&x, &y);
@@ -22,8 +29,7 @@ bool World::MouseClick()
 	mMousePosition.x = (float)x;
 	mMousePosition.y = (float)y;
 
-	int MouseLeft = r & SDL_BUTTON(SDL_BUTTON_LEFT);
-	return (bool) MouseLeft;
+	mMouseLeft = r & SDL_BUTTON(SDL_BUTTON_LEFT);
 }
 
 void World::LauchMissile()
@@ -52,8 +58,8 @@ void World::Destroy()
 
 void World::Update(float fDeltaT)
 {
-
-	if (MouseClick())
+	MouseClick();
+	if ((bool) mMouseLeft && !mMouseLeftOld)
 	{
 		LauchMissile();
 	}
@@ -75,4 +81,6 @@ void World::Update(float fDeltaT)
 		pShape->Render();
 	}
 
+	Factory::Instance()->cleanStaleList();
+	mMouseLeftOld = (bool)mMouseLeft;
 }

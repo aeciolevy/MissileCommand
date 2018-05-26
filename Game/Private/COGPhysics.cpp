@@ -47,16 +47,6 @@ void COGPhysics::Destroy()
 
 void COGPhysics::Update(float fDeltaT)
 {
-	// integrate velocity
-	//if (mGenerateCollisionEvents)
-	//{
-	//	exVector2& myPosition = mTransform->GetPosition();
-
-	//	myPosition.x += mVelocity.x * fDeltaT;
-	//	myPosition.y += mVelocity.y * fDeltaT;
-	//}
-	//
-
 	// check collisions
 	if (mGenerateCollisionEvents)
 	{
