@@ -28,15 +28,18 @@ public:
 	virtual void				OnEvent( SDL_Event* pEvent );
 	virtual void				OnEventsConsumed();
 
+	virtual void				DrawCrosshair();
+
 	virtual void				Run( float fDeltaT );
 
 private:
 
 	exEngineInterface*			mEngine;
 
-	exVector2					mTextPosition;
+	exVector2					mMousePosition;
 
 	World*						mWorld;
 
 	ScoreManager*				mScoreManager;
+
 };

@@ -19,7 +19,7 @@ public:
 
 	void Update(float fDeltaT);
 
-	virtual bool MouseClick();
+	virtual void MouseClick();
 
 	virtual void LauchMissile();
 
@@ -29,4 +29,7 @@ private:
 	std::vector<GameObjectHandle>		mGameObjects;
 	exEngineInterface*					mEngine;
 	exVector2							mMousePosition;
+	int									mCities;
+	int									mMouseLeft;
+	bool								mMouseLeftOld;
 };

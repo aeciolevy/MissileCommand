@@ -15,7 +15,6 @@ GameObject::~GameObject()
 
 		delete pComponent;
 	}
-	GameObjectInventory::Instance()->Unregister(this);
 }
 
 void GameObject::Initialize() 
@@ -34,6 +33,6 @@ void GameObject::AddComponent(Component* pComponent)
 GameObjectHandle GameObject::GetHandle()
 {
 	GameObjectHandle temp;
-	temp.Get();
+	temp.SetHash(mHash);
 	return temp;
 }

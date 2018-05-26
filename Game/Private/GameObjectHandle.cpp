@@ -8,5 +8,6 @@ bool GameObjectHandle::IsValid() const
 
 GameObject* GameObjectHandle::Get() const
 {
+
 	return GameObjectInventory::Instance()->Lookup(mHash);
 }

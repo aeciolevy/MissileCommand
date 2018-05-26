@@ -41,7 +41,16 @@ public:
 
 	void Delete(T data)
 	{
-		// TODO - delete from hash map
+		int index = Translate(data->mHash);
+		const std::list<T>& bucket = mBuckets[index];
+
+		for (auto& value : bucket)
+		{
+			if (value == data)
+			{
+				delete value;
+			}
+		}
 	}
 
 private:

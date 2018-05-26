@@ -1,8 +1,9 @@
 #include "Game\Public\COGController.h"
 #include "Game\Public\Output.h"
+#include "Game\Public\GameObjectInventory.h"
+#include "Game\Public\Factory.h"
 
 std::vector<COGController*> COGController::mControllerComponents;
-
 
 void COGController::SetVectorToMissile(exVector2 finalPosition)
 {
@@ -38,6 +39,10 @@ void COGController::Update(float DeltaTime)
 		mPosition.x += mUnitVector.x * mVelocity * DeltaTime;
 		mPosition.y += mUnitVector.y * mVelocity * DeltaTime;
 		mTransform->SetFinalPos(mPosition);
+	}
+	else
+	{
+		Factory::Instance()->addToStaleList(mGO);
 	}
 	
 }

@@ -2,21 +2,26 @@
 #include "Game\Public\Factory.h"
 #include "Engine/Public/SDL.h"
 
+extern std::hash<std::string> s_hash;
+
 World::World(exEngineInterface* pEngine)
 {
 	mEngine = pEngine;
 	mFactory = Factory::Instance();
+	mCities = 6;
+	mMouseLeft = 0;
 }
 
 void World::Initialize()
 {
-	GameObject* city = mFactory->CreateGameObject(mEngine, { 50.0f, 590.0f }, GameObjectType::City);
-	mGameObjects.push_back(city->GetHandle());
-	GameObject* base = mFactory->CreateGameObject(mEngine, { 10.0f, 590.0f }, GameObjectType::Base);
-	mGameObjects.push_back(base->GetHandle());
+	for (int i = 0; i < mCities; i++)
+	{
+		GameObject* city = mFactory->CreateGameObject(mEngine, { 50.0f, 590.0f }, GameObjectType::City);
+		mGameObjects.push_back(city->GetHandle());
+	}
 }
 
-bool World::MouseClick()
+void World::MouseClick()
 {
 	int x, y;
 	unsigned int r = SDL_GetMouseState(&x, &y);
@@ -24,13 +29,27 @@ bool World::MouseClick()
 	mMousePosition.x = (float)x;
 	mMousePosition.y = (float)y;
 
-	int MouseLeft = r & SDL_BUTTON(SDL_BUTTON_LEFT);
-	return (bool) MouseLeft;
+	mMouseLeft = r & SDL_BUTTON(SDL_BUTTON_LEFT);
 }
 
 void World::LauchMissile()
 {
-	GameObject* missile = mFactory->CreateMissiles(mEngine, { 30.0f, 590.0f }, mMousePosition, GameObjectType::MissileFriend);
+	exVector2 base1 = { 133.0f, 590.0f };
+	exVector2 base2 = { 399.0f, 590.0f };
+	exVector2 base3 = { 665.0f, 590.0f };
+	if (mMousePosition.x < 266)
+	{
+		GameObject* missile = mFactory->CreateMissiles(mEngine, base1, mMousePosition, GameObjectType::MissileFriend);
+	}
+	else if (mMousePosition.x >= 266.0f && mMousePosition.x < 532.0f)
+	{
+		GameObject* missile = mFactory->CreateMissiles(mEngine, base2, mMousePosition, GameObjectType::MissileFriend);
+	}
+	else if (mMousePosition.x >= 532.0f && mMousePosition.x <= kViewPortWidth)
+	{
+		GameObject* missile = mFactory->CreateMissiles(mEngine, base3, mMousePosition, GameObjectType::MissileFriend);
+	}
+	
 }
 
 void World::Destroy()
@@ -39,8 +58,8 @@ void World::Destroy()
 
 void World::Update(float fDeltaT)
 {
-
-	if (MouseClick())
+	MouseClick();
+	if ((bool) mMouseLeft && !mMouseLeftOld)
 	{
 		LauchMissile();
 	}
@@ -61,4 +80,7 @@ void World::Update(float fDeltaT)
 	{
 		pShape->Render();
 	}
+
+	Factory::Instance()->cleanStaleList();
+	mMouseLeftOld = (bool)mMouseLeft;
 }
