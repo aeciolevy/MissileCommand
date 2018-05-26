@@ -7,13 +7,12 @@ class COGLineShape : public COGShape
 {
 public:
 
-	COGLineShape(exEngineInterface* pEngine, GameObject* pGO, exVector2 startPosition, exVector2 finalPosition, exColor missileColor)
+	COGLineShape(exEngineInterface* pEngine, GameObject* pGO, exVector2 startPosition, exColor missileColor)
 		:COGShape(pGO)
 	{
 		mEngine = pEngine;
 		mTransform = pGO->FindComponent<COGTransform>(ComponentType::Transform);
-		mStartPos = startPosition;
-		mFinalPos = finalPosition;
+		mStartPos = mTransform->GetPosition();
 		mColor = missileColor;
 	}
 
@@ -21,6 +20,7 @@ public:
 
 	virtual void Render() override
 	{
+		mFinalPos = mTransform->GetFinalPos();
 		mEngine->DrawLine(mStartPos, mFinalPos, mColor, 2);
 	}
 

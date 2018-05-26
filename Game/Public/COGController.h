@@ -28,12 +28,19 @@ public:
 		RemoveFromComponentVector(mControllerComponents);
 	}
 
+	void SetVectorToMissile(exVector2 finalPosition);
+
+	bool ReachFinalPosition();
+
 	virtual void Update(float DeltaTime);
 
 
 private:
 
+	exVector2					mFinalPosition;
 	exVector2					mPosition;
+	exVector2					mUnitVector;
+	exVector2					mDirection;
 	COGTransform *				mTransform;
 	float						mVelocity;
 
