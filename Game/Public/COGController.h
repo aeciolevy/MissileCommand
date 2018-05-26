@@ -11,6 +11,7 @@ public:
 	COGController(GameObject* pGO, COGTransform* pTransform)
 		: Component(pGO)
 	{
+		mGO = pGO;
 		mTransform = pTransform;
 		mPosition = pTransform->GetPosition();
 		mVelocity = 80.0f;
@@ -32,6 +33,7 @@ public:
 
 	bool ReachFinalPosition();
 
+
 	virtual void Update(float DeltaTime);
 
 
@@ -43,6 +45,10 @@ private:
 	exVector2					mDirection;
 	COGTransform *				mTransform;
 	float						mVelocity;
+	bool						mFinish;
+	GameObject*					mGO;
+
+
 
 
 };
