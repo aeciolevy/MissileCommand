@@ -2,7 +2,7 @@
 #include "Game\Public\GameObject.h"
 #include "Game\Public\COGPhysics.h"
 #include "Game\Public\COGBounce.h"
-#include "Game\Public\COGInput.h"
+#include "Game\Public\COGController.h"
 #include "Engine/Public/EngineInterface.h"
 
 class Factory;
@@ -19,9 +19,14 @@ public:
 
 	void Update(float fDeltaT);
 
+	virtual bool MouseClick();
+
+	virtual void LauchMissile();
+
 private:
 
-	Factory*						mFactory;
+	Factory*							mFactory;
 	std::vector<GameObjectHandle>		mGameObjects;
-	exEngineInterface*				mEngine;
+	exEngineInterface*					mEngine;
+	exVector2							mMousePosition;
 };
