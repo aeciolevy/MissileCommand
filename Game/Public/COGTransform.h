@@ -23,7 +23,6 @@ public:
 		mFinalPos = finalPosition;
 	}
 
-
 	void ResetPosition(exVector2 newPosition)
 	{
 		mPosition = newPosition;

@@ -1,6 +1,7 @@
 #include "Game\Public\World.h"
 #include "Game\Public\Factory.h"
 #include "Engine/Public/SDL.h"
+#include "Game\Public\Help.h"
 
 extern std::hash<std::string> s_hash;
 
@@ -16,7 +17,7 @@ void World::Initialize()
 {
 	for (int i = 0; i < mCities; i++)
 	{
-		GameObject* city = mFactory->CreateGameObject(mEngine, { 50.0f, 590.0f }, GameObjectType::City);
+		GameObject* city = mFactory->CreateGameObject(mEngine, Help::CreateCities(mCities, i), GameObjectType::City);
 		mGameObjects.push_back(city->GetHandle());
 	}
 }

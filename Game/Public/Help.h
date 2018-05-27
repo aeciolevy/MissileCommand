@@ -6,8 +6,11 @@ const float CITY_SIZE = 100;
 class Help {
 
 public:
-	exVector2 static CreateCities(int numberOfCities, int index) 
+	exVector2 static CreateCities(int numberOfCities, int index)
 	{
-		int 
+		float spareSpace = kViewPortWidth - (numberOfCities * CITY_SIZE);
+		float padding = spareSpace / numberOfCities;
+		float xPos = padding * index + padding + index * CITY_SIZE;
+		return { xPos, 590.0f };
 	}
 };
