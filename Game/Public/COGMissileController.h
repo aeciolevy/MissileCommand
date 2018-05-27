@@ -1,44 +1,37 @@
 #pragma once
 #include "Game\Public\GameObject.h"
 #include "Game\Public\COGTransform.h"
+#include "Engine\Public\EngineInterface.h"
 
-class COGController : public Component
+class COGMissileController : public Component
 {
 public:
-	static std::vector<COGController*> mControllerComponents;
+	static std::vector<COGMissileController*> mMissileControllerComponents;
 public:
 
-	COGController(GameObject* pGO, COGTransform* pTransform)
-		: Component(pGO)
-	{
-		mGO = pGO;
-		mTransform = pTransform;
-		mPosition = pTransform->GetPosition();
-		mVelocity = 80.0f;
-	}
+	COGMissileController(GameObject* pGO, COGTransform* pTransform, exEngineInterface* pEngine);
 
-	virtual ComponentType GetType() const { return ComponentType::Input; }
-
+	virtual ComponentType GetType() const { return ComponentType::MissileController; }
+	
 	virtual void Initialize() override
 	{
-		AddToComponentVector(mControllerComponents);
+		AddToComponentVector(mMissileControllerComponents);
 	}
 
 	virtual void Destroy() override
 	{
-		RemoveFromComponentVector(mControllerComponents);
+		RemoveFromComponentVector(mMissileControllerComponents);
 	}
 
 	void SetVectorToMissile(exVector2 finalPosition);
 
 	bool ReachFinalPosition();
 
-
 	virtual void Update(float DeltaTime);
 
 
 private:
-
+	exEngineInterface *			mEngine;
 	exVector2					mFinalPosition;
 	exVector2					mPosition;
 	exVector2					mUnitVector;
@@ -47,5 +40,5 @@ private:
 	float						mVelocity;
 	bool						mFinish;
 	GameObject*					mGO;
+	ComponentType				mType;
 };
-
