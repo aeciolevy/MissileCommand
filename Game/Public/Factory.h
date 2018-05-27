@@ -73,11 +73,11 @@ public:
 		COGTransform* pTransform = new COGTransform(explosion, startPosition);
 		explosion->AddComponent(pTransform);
 
-		COGExplosionController* pExplosionController = new COGExplosionController(explosion, pTransform);
-		explosion->AddComponent(pExplosionController);
-
-		COGExplosion* pExplosion = new COGExplosion(pEngine, explosion, pTransform, startPosition, Radius, explosionColor);
+		COGExplosion* pExplosion = new COGExplosion(pEngine, explosion, pTransform, startPosition, explosionColor);
 		explosion->AddComponent(pExplosion);
+
+		COGExplosionController* pExplosionController = new COGExplosionController(explosion, pTransform, Radius);
+		explosion->AddComponent(pExplosionController);
 
 		COGPhysics* pPhysics = new COGPhysics(explosion, true);
 		explosion->AddComponent(pPhysics);

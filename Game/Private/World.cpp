@@ -69,6 +69,11 @@ void World::Update(float fDeltaT)
 		pMissileController->Update(fDeltaT);
 	}
 
+	for (COGExplosionController* pExplosionController : COGExplosionController::mExplosionControllerComponents)
+	{
+		pExplosionController->Update(fDeltaT);
+	}
+
 	// run simulation first
 	for (COGPhysics* pPhysics : COGPhysics::mPhysicsComponents)
 	{
