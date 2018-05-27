@@ -64,9 +64,9 @@ void World::Update(float fDeltaT)
 		LauchMissile();
 	}
 
-	for (COGController* pController : COGController::mControllerComponents)
+	for (COGMissileController* pMissileController : COGMissileController::mMissileControllerComponents)
 	{
-		pController->Update(fDeltaT);
+		pMissileController->Update(fDeltaT);
 	}
 
 	// run simulation first

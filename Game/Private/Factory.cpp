@@ -72,9 +72,9 @@ GameObject* Factory::CreateFriendMissile(Hash hash, exEngineInterface* pEngine, 
 	COGTransform* pTransform = new COGTransform(missile, startPosition);
 	missile->AddComponent(pTransform);
 
-	COGController* pController = new COGController(missile, pTransform);
-	pController->SetVectorToMissile(finalPosition);
-	missile->AddComponent(pController);
+	COGMissileController* pMissileController = new COGMissileController(missile, pTransform, pEngine);
+	pMissileController->SetVectorToMissile(finalPosition);
+	missile->AddComponent(pMissileController);
 
 	COGLineShape* pLineShape = new COGLineShape(pEngine, missile, startPosition, missileColor);
 	missile->AddComponent(pLineShape);

@@ -82,10 +82,16 @@
     <ClInclude Include="Game\Public\COGLineShape.h">
       <Filter>Source Files\Game\HeaderFiles</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Public\COGController.h">
+    <ClInclude Include="Game\Public\Help.h">
       <Filter>Source Files\Game\HeaderFiles</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Public\Help.h">
+    <ClInclude Include="Game\Public\COGExplosion.h">
+      <Filter>Source Files\Game\HeaderFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Public\COGExplosionController.h">
+      <Filter>Source Files\Game\HeaderFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Public\COGMissileController.h">
       <Filter>Source Files\Game\HeaderFiles</Filter>
     </ClInclude>
   </ItemGroup>
@@ -123,7 +129,10 @@
     <ClCompile Include="Game\Private\GameObjectHandle.cpp">
       <Filter>Source Files\Game\SourceFiles</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Private\COGController.cpp">
+    <ClCompile Include="Game\Private\COGMissileController.cpp">
+      <Filter>Source Files\Game\SourceFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Private\COGExplosionController.cpp">
       <Filter>Source Files\Game\SourceFiles</Filter>
     </ClCompile>
   </ItemGroup>

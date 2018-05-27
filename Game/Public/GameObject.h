@@ -18,7 +18,10 @@ enum class ComponentType : int
 	CircleShape,
 	LineShape,
 	Bounce, 
-	Input
+	Controller,
+	Explosion,
+	ExplosionController,
+	MissileController
 };
 
 enum class PaddleIdentifier : int
