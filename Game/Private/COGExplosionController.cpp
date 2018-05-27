@@ -1,32 +1,24 @@
 #include "Game\Public\COGExplosionController.h"
 #include "Game\Public\Factory.h"
 
-std::vector<COGExplosionController*> COGExplosionController::mMissileControllerComponents;
+std::vector<COGExplosionController*> COGExplosionController::mExplosionControllerComponents;
 
-COGExplosionController::COGExplosionController(GameObject* pGO, COGTransform* pTransform)
+COGExplosionController::COGExplosionController(GameObject* pGO, COGTransform* pTransform, float radius)
 	: Component(pGO)
 {
 	mGO = pGO;
+	mExplosion = pGO->FindComponent<COGExplosion>(ComponentType::Explosion);
 	mTransform = pTransform;
-	mPosition = pTransform->GetPosition();
-	mVelocity = 80.0f;
+	mVelocity = 10.0f;
+	mRadius = 0.0;
+	mFinalRadius = radius;
 }
 
 bool COGExplosionController::ReachFinalPosition()
 {
-	if (mDirection.x > 0)
+	if (mRadius >= mFinalRadius)
 	{
-		if (mPosition.x >= mFinalPosition.x)
-		{
-			return true;
-		}
-	}
-	else
-	{
-		if (mPosition.x <= mFinalPosition.x)
-		{
-			return true;
-		}
+		return true;
 	}
 	return false;
 }
@@ -36,9 +28,8 @@ void COGExplosionController::Update(float DeltaTime)
 {
 	if (ReachFinalPosition() == false)
 	{
-		mPosition.x += mUnitVector.x * mVelocity * DeltaTime;
-		mPosition.y += mUnitVector.y * mVelocity * DeltaTime;
-		mTransform->SetFinalPos(mPosition);
+		mRadius += mVelocity * DeltaTime;
+		mExplosion->SetRadius(mRadius);
 	}
 	else
 	{

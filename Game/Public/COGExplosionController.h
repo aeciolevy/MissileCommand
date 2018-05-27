@@ -2,24 +2,26 @@
 #include "Game\Public\GameObject.h"
 #include "Game\Public\COGTransform.h"
 
+class COGExplosion;
+
 class COGExplosionController : public Component
 {
 public:
-	static std::vector<COGExplosionController*> mMissileControllerComponents;
+	static std::vector<COGExplosionController*> mExplosionControllerComponents;
 public:
 
-	COGExplosionController(GameObject* pGO, COGTransform* pTransform);
+	COGExplosionController(GameObject* pGO, COGTransform* pTransform, float radius);
 
 	virtual ComponentType GetType() const { return ComponentType::ExplosionController; }
 
 	virtual void Initialize() override
 	{
-		AddToComponentVector(mMissileControllerComponents);
+		AddToComponentVector(mExplosionControllerComponents);
 	}
 
 	virtual void Destroy() override
 	{
-		RemoveFromComponentVector(mMissileControllerComponents);
+		RemoveFromComponentVector(mExplosionControllerComponents);
 	}
 
 	bool ReachFinalPosition();
@@ -29,13 +31,12 @@ public:
 
 private:
 
-	exVector2					mFinalPosition;
-	exVector2					mPosition;
-	exVector2					mUnitVector;
-	exVector2					mDirection;
-	COGTransform *				mTransform;
 	float						mVelocity;
+	float						mRadius;
+	float						mFinalRadius;
+	COGTransform *				mTransform;
 	bool						mFinish;
+	COGExplosion*				mExplosion;
 	GameObject*					mGO;
 	ComponentType				mType;
 };

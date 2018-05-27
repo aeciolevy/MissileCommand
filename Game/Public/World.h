@@ -3,6 +3,7 @@
 #include "Game\Public\COGPhysics.h"
 #include "Game\Public\COGBounce.h"
 #include "Game\Public\COGMissileController.h"
+#include "Game\Public\COGExplosionController.h"
 #include "Engine/Public/EngineInterface.h"
 
 class Factory;

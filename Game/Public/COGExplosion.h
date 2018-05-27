@@ -5,13 +5,13 @@
 class COGExplosion : public COGShape
 {
 public:
-	COGExplosion(exEngineInterface* pEngine, GameObject* pGO, COGTransform* pTransform, exVector2 startPosition, float fRadius, exColor color)
+	COGExplosion(exEngineInterface* pEngine, GameObject* pGO, COGTransform* pTransform, exVector2 startPosition, exColor color)
 		: COGShape(pGO)
-		, mRadius(fRadius)
 		, mCenter(startPosition)
 		, mColor(color)
 	{
 		mEngine = pEngine;
+		mRadius = 1.0f;
 		mTransform = pGO->FindComponent<COGTransform>(ComponentType::Transform);
 		mColor.mColor[0] = 255;
 		mColor.mColor[1] = 255;
@@ -29,6 +29,11 @@ public:
 	virtual exVector2 GetCenter()
 	{
 		return mTransform->GetPosition();
+	}
+
+	virtual void SetRadius(float newRadius)
+	{
+		mRadius = newRadius;
 	}
 
 	virtual void Render() override
