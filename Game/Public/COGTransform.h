@@ -16,9 +16,11 @@ public:
 
 	exVector2& GetPosition() { return mPosition; }
 
-	void SetPosition(float increment) 
+	exVector2& GetFinalPos() { return mFinalPos; }
+
+	void SetFinalPos(exVector2 finalPosition) 
 	{
-		mPosition.y += increment;
+		mFinalPos = finalPosition;
 	}
 
 	void ResetPosition(exVector2 newPosition)
@@ -27,7 +29,8 @@ public:
 	}
 
 private:
-
+	
+	exVector2 mFinalPos;
 	exVector2 mPosition;
 
 };

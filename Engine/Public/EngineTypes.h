@@ -27,6 +27,17 @@ struct exVector2
 		return uVector;
 	}
 
+	float Magnitude()
+	{
+		float sumSquare = powf(x, 2) + powf(y, 2);
+		return sqrtf(sumSquare);
+	}
+
+	exVector2 GetVector(exVector2 finalPosition)
+	{
+		return { finalPosition.x - x, finalPosition.y - y };
+	}
+
 	float Dot(exVector2 vec1)
 	{
 		return vec1.x * x + vec1.y * y;
@@ -74,4 +85,11 @@ struct exIntegerVector2
 struct exColor
 {
 	unsigned char mColor[4];
+	void SetColor(int r, int g, int b, int a)
+	{
+		mColor[0] = (char) r;
+		mColor[1] = (char) g;
+		mColor[2] = (char) b;
+		mColor[3] = (char) a;
+	}
 };

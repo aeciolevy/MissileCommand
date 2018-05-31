@@ -1,7 +1,10 @@
 #include "Game\Public\GameObject.h"
+#include "Game\Public\GameObjectInventory.h"
 
-GameObject::GameObject()
+GameObject::GameObject(Hash hash)
 {
+	mHash = hash;
+	GameObjectInventory::Instance()->Register(this);
 }
 
 GameObject::~GameObject()
@@ -25,4 +28,11 @@ void GameObject::Initialize()
 void GameObject::AddComponent(Component* pComponent)
 {
 	mComponents.push_back(pComponent);
+}
+
+GameObjectHandle GameObject::GetHandle()
+{
+	GameObjectHandle temp;
+	temp.SetHash(mHash);
+	return temp;
 }

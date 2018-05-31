@@ -39,12 +39,10 @@ public:
 		float xPositionRight = mTransform->GetPosition().x + mRadius;
 		if (xPositionLeft <= 0)
 		{
-			++ScoreManager::scoreP2;
 			mTransform->ResetPosition({ 550.0f, 300.0f});
 		}
 		if (xPositionRight >= kViewPortWidth)
 		{
-			++ScoreManager::scoreP1;
 			mTransform->ResetPosition({ 350.0f, 300.0f });
 		}
 	}

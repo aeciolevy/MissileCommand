@@ -25,11 +25,11 @@ public:
 		return result;
 	}
 
-	virtual void OnCollision(COGPhysics* pMe, COGPhysics* pOther, exVector2 normal) override
+	virtual void OnCollision(COGPhysics* pMe, COGPhysics* pOther) override
 	{
-		exVector2 velocity = pMe->GetVelocity();
+		/*exVector2 velocity = pMe->GetVelocity();
 		exVector2 result = CalculateResultVector(velocity, normal);
-		pMe->SetVelocity(result);
+		pMe->SetVelocity(result);*/
 	}
 
 };

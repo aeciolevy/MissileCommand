@@ -3,7 +3,10 @@
 #include <vector>
 #include <algorithm>
 #include "Engine/Public/EngineTypes.h"
+#include "Game\Public\GameObjectHandle.h"
 
+typedef unsigned int Hash;
+class GameObjectHandle;
 class GameObject;
 
 // all the different types of components
@@ -13,8 +16,12 @@ enum class ComponentType : int
 	Physics,
 	BoxShape,
 	CircleShape,
+	LineShape,
 	Bounce, 
-	Input
+	Controller,
+	Explosion,
+	ExplosionController,
+	MissileController
 };
 
 enum class PaddleIdentifier : int
@@ -54,12 +61,16 @@ protected:
 class GameObject
 {
 public:
+	Hash	mHash;
+public:
 
-	GameObject();
+	GameObject(Hash hash);
 	~GameObject();
 	void Initialize();
 	void AddComponent(Component* pComponent);
 	
+	GameObjectHandle GetHandle();
+
 	template<class T>
 	T* FindComponent(ComponentType eType)
 	{
@@ -74,6 +85,7 @@ public:
 	}
 
 private:
-	std::vector<Component*> mComponents;
+	
+	std::vector<Component*>		mComponents;
 };
 

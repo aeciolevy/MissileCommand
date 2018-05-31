@@ -8,16 +8,15 @@ public:
 	friend class Singleton<ScoreManager>;
 	void Initialize(exEngineInterface* engine);
 	void Render();
-	void P1RenderText();
-	void P2RenderText();
-	static int scoreP1;
-	static int scoreP2;
+	void RenderText();
+	void RenderMissile();
+	static int score;
 private:
 	exEngineInterface * mEngine;
 	int					mFontID;
 	exColor				mTextColor;
-	exVector2			mTextP1;
 	exVector2			mTextP2;
-	exVector2			mScorePositionP1;
 	exVector2			mScorePositionP2;
+	exVector2			mMissileText;
+	exVector2			mMissileText2;
 };
