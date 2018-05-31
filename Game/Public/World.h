@@ -5,6 +5,7 @@
 #include "Game\Public\COGMissileController.h"
 #include "Game\Public\COGExplosionController.h"
 #include "Engine/Public/EngineInterface.h"
+#include "Game/Public/AIMissile.h"
 
 class Factory;
 // the world, it contains all of our game objects and defines the order of updates
@@ -20,6 +21,8 @@ public:
 
 	void Update(float fDeltaT);
 
+	virtual void DrawGameOver();
+
 	virtual void MouseClick();
 
 	virtual void LauchMissile();
@@ -27,7 +30,9 @@ public:
 private:
 
 	Factory*							mFactory;
+	AIMissile*							mAIMissile;
 	std::vector<GameObjectHandle>		mGameObjects;
+	std::vector<exVector2>				mCitiesPosition;
 	exEngineInterface*					mEngine;
 	exVector2							mMousePosition;
 	int									mCities;

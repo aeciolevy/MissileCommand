@@ -18,6 +18,11 @@ public:
 
 	virtual ComponentType GetType() const { return ComponentType::LineShape; }
 
+	virtual exVector2 GetPosition()
+	{
+		return mTransform->GetFinalPos();
+	}
+
 	virtual void Render() override
 	{
 		mFinalPos = mTransform->GetFinalPos();

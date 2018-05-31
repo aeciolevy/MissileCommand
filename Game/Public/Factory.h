@@ -23,6 +23,7 @@ enum class GameObjectType : int
 	Base,
 	MissileFriend,
 	Missile,
+	MissileEnemy,
 	Explosion,
 };
 
@@ -34,6 +35,8 @@ class Factory : public Singleton<Factory>
 {
 	
 public:
+	int mCities;
+	int static mMissiliesAvailable;
 	friend class Singleton<Factory>;
 	
 	Factory()
@@ -41,73 +44,19 @@ public:
 	{
 	}
 
-	GameObject* CreateGameObject(exEngineInterface* pEngine, exVector2 startPosition, GameObjectType gameType) {
-		GameObject* newGameObject;
-		++mIdentify;
-		switch (gameType)
-		{
-		case GameObjectType::City :
-			return newGameObject = CreateCity(s_hash("City" + std::to_string(mIdentify)), pEngine, startPosition);
-		case GameObjectType::Base :
-			return newGameObject = CreateBase(s_hash("Base" + std::to_string(mIdentify)), pEngine, startPosition);
-		case GameObjectType::Explosion :
-			return newGameObject = CreateExplosion(s_hash("Explosion" + std::to_string(mIdentify)), pEngine, startPosition);
-		default:
-			std::cout << "Wrong type" << std::endl;
-			return nullptr;
-		}
-	}
-
-	GameObject* CreateExplosion(Hash hash, exEngineInterface* pEngine, exVector2 startPosition)
-	{
-		exColor explosionColor;
-		explosionColor.mColor[0] = 255;
-		explosionColor.mColor[1] = 255;
-		explosionColor.mColor[2] = 196;
-		explosionColor.mColor[3] = 255;
-
-		float Radius = 40.0f;
-
-		GameObject* explosion = new GameObject(hash);
-
-		COGTransform* pTransform = new COGTransform(explosion, startPosition);
-		explosion->AddComponent(pTransform);
-
-		COGExplosion* pExplosion = new COGExplosion(pEngine, explosion, pTransform, startPosition, explosionColor);
-		explosion->AddComponent(pExplosion);
-
-		COGExplosionController* pExplosionController = new COGExplosionController(explosion, pTransform, Radius);
-		explosion->AddComponent(pExplosionController);
-
-		COGPhysics* pPhysics = new COGPhysics(explosion, true);
-		explosion->AddComponent(pPhysics);
-
-		explosion->Initialize();
-
-		return explosion;
-	}
-
-	GameObject* CreateMissiles(exEngineInterface* pEngine, exVector2 startPosition, exVector2 finalPosition, GameObjectType gameType) {
-		GameObject* newGameObject;
-		++mIdentify;
-		switch (gameType)
-		{
-		case GameObjectType::MissileFriend: 
-			return newGameObject = CreateFriendMissile(s_hash("Missile" + std::to_string(mIdentify)), pEngine, startPosition, finalPosition);
-		default:
-			std::cout << "Wrong type" << std::endl;
-			return nullptr;
-		}
-	}
+	GameObject* CreateGameObject(exEngineInterface* pEngine, exVector2 startPosition, GameObjectType gameType);
+	GameObject* CreateMissiles(exEngineInterface* pEngine, exVector2 startPosition, exVector2 finalPosition, GameObjectType gameType);
 
 	GameObject* CreateCity(Hash hash, exEngineInterface* pEngine, exVector2 startPosition);
-	GameObject* CreateBase(Hash hash, exEngineInterface* pEngine, exVector2 startPosition);
-	GameObject* CreateFriendMissile(Hash hash, exEngineInterface* pEngine, exVector2 startPosition, exVector2 finalPosition);
+	GameObject* CreateMissile(Hash hash, exEngineInterface* pEngine, exVector2 startPosition, exVector2 finalPosition, exColor color, bool collisionActive, GameObjectType type);
+	GameObject* CreateExplosion(Hash hash, exEngineInterface* pEngine, exVector2 startPosition);
+
 	void addToStaleList(GameObject* gameObject);
 	void cleanStaleList();
 	
 
 private:
-	std::vector<GameObject* >	mStaleGameObjects;
+	
+	std::vector<GameObject*>	mStaleGameObjects;
 	int							mIdentify;
 };

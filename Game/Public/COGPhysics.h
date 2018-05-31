@@ -4,21 +4,25 @@
 #include "Game\Public\COGTransform.h"
 #include "Game\Public\COGBoxShape.h"
 #include "Game\Public\COGCircleShape.h"
+#include "Game/Public/COGExplosion.h"
+#include "Game/Public/COGLineShape.h"
 #include "Game\Public\Output.h"
+#include "Game/Public/Factory.h"
 
 
-struct CircleParams
-{
-	exVector2 Center;
-	float Radius;
-};
 
-struct BoxParams
-{
-	exVector2 vertex1;
-	exVector2 vertex2;
-};
-
+//struct CircleParams
+//{
+//	exVector2 Center;
+//	float Radius;
+//};
+//
+//struct BoxParams
+//{
+//	exVector2 vertex1;
+//	exVector2 vertex2;
+//};
+enum class GameObjectType;
 // our interface that allows COGPhysics to talk to anyone
 class IPhysicsCollisionEvent;
 
@@ -31,7 +35,7 @@ public:
 
 public:
 
-	COGPhysics(GameObject* pGO, bool bGenerateCollisionEvents);
+	COGPhysics(GameObject* pGO, bool bGenerateCollisionEvents, GameObjectType type);
 
 	~COGPhysics();
 
@@ -45,11 +49,11 @@ public:
 
 	bool IsColliding(COGPhysics* pOther);
 
-	CircleParams GetCircleParams();
+	//CircleParams GetCircleParams();
 
-	BoxParams	GetBoxParams(COGBoxShape* boxShape);
+	//BoxParams	GetBoxParams(COGBoxShape* boxShape);
 
-	exVector2 GetNormal(COGPhysics* pOther);
+	//exVector2 GetNormal(COGPhysics* pOther);
 
 	exVector2& GetVelocity();
 
@@ -59,8 +63,10 @@ private:
 
 	COGTransform * mTransform;
 	COGBoxShape* mBoxShape;
-	COGCircleShape* mCircleShape;
-
+	COGExplosion* mExplosion;
+	COGLineShape* mMissile;
+	GameObjectType mType;
+	GameObject* mGO;
 	exVector2 mVelocity;	
 	bool mGenerateCollisionEvents;
 	std::vector<IPhysicsCollisionEvent*> mCollisionEventListeners;
@@ -71,6 +77,6 @@ class IPhysicsCollisionEvent
 {
 public:
 
-	virtual void OnCollision(COGPhysics* pMe, COGPhysics* pOther, exVector2 normal) = 0;
+	virtual void OnCollision(COGPhysics* pMe, COGPhysics* pOther) = 0;
 };
 

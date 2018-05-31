@@ -1,7 +1,7 @@
 #include "Game\Public\Factory.h"
 
 Factory* Singleton<Factory>::mSingleton = nullptr;
-
+int Factory::mMissiliesAvailable = 25;
 std::hash<std::string> s_hash;
 
 GameObject* Factory::CreateCity(Hash hash, exEngineInterface* pEngine, exVector2 startPosition)
@@ -10,10 +10,7 @@ GameObject* Factory::CreateCity(Hash hash, exEngineInterface* pEngine, exVector2
 	const float CITY_HEIGHT = 10.0f;
 
 	exColor cityColor;
-	cityColor.mColor[0] = 255;
-	cityColor.mColor[1] = 10;
-	cityColor.mColor[2] = 10;
-	cityColor.mColor[3] = 255;
+	cityColor.SetColor(64, 22, 153, 255);
 
 	GameObject* city = new GameObject(hash);
 
@@ -23,7 +20,7 @@ GameObject* Factory::CreateCity(Hash hash, exEngineInterface* pEngine, exVector2
 	COGBoxShape* pBoxShape = new COGBoxShape(pEngine, city, CITY_WIDTH, CITY_HEIGHT, cityColor);
 	city->AddComponent(pBoxShape);
 
-	COGPhysics* pPhysics = new COGPhysics(city, true);
+	COGPhysics* pPhysics = new COGPhysics(city, true, GameObjectType::City);
 	city->AddComponent(pPhysics);
 
 	city->Initialize();
@@ -31,42 +28,10 @@ GameObject* Factory::CreateCity(Hash hash, exEngineInterface* pEngine, exVector2
 	return city;
 }
 
-GameObject* Factory::CreateBase(Hash hash, exEngineInterface* pEngine, exVector2 startPosition)
+GameObject* Factory::CreateMissile(Hash hash, exEngineInterface* pEngine, exVector2 startPosition, exVector2 finalPosition, exColor color, bool collisionActive, GameObjectType type)
 {
-	const float BASE_WIDTH = 25.0f;
-	const float BASE_HEIGHT = 10.0f;
-
-	exColor baseColor;
-	baseColor.mColor[0] = 128;
-	baseColor.mColor[1] = 1;
-	baseColor.mColor[2] = 196;
-	baseColor.mColor[3] = 255;
-
-	GameObject* base = new GameObject(hash);
-
-	COGTransform* pTransform = new COGTransform(base, startPosition);
-	base->AddComponent(pTransform);
-
-	COGBoxShape* pBoxShape = new COGBoxShape(pEngine, base, BASE_WIDTH, BASE_HEIGHT, baseColor);
-	base->AddComponent(pBoxShape);
-
-	COGPhysics* pPhysics = new COGPhysics(base, true);
-	base->AddComponent(pPhysics);
-
-	base->Initialize();
-
-	return base;
-}
-
-GameObject* Factory::CreateFriendMissile(Hash hash, exEngineInterface* pEngine, exVector2 startPosition, exVector2 finalPosition)
-{
-
-	exColor missileColor;
-	missileColor.mColor[0] = 255;
-	missileColor.mColor[1] = 255;
-	missileColor.mColor[2] = 196;
-	missileColor.mColor[3] = 255;
-
+	exColor missileColor = color;
+	
 	GameObject* missile = new GameObject(hash);
 
 	COGTransform* pTransform = new COGTransform(missile, startPosition);
@@ -79,7 +44,7 @@ GameObject* Factory::CreateFriendMissile(Hash hash, exEngineInterface* pEngine, 
 	COGLineShape* pLineShape = new COGLineShape(pEngine, missile, startPosition, missileColor);
 	missile->AddComponent(pLineShape);
 
-	COGPhysics* pPhysics = new COGPhysics(missile, true);
+	COGPhysics* pPhysics = new COGPhysics(missile, collisionActive, type);
 	missile->AddComponent(pPhysics);
 
 	missile->Initialize();
@@ -87,10 +52,87 @@ GameObject* Factory::CreateFriendMissile(Hash hash, exEngineInterface* pEngine, 
 	return missile;
 }
 
+GameObject* Factory::CreateGameObject(exEngineInterface* pEngine, exVector2 startPosition, GameObjectType gameType)
+{
+	GameObject* newGameObject;
+	++mIdentify;
+	switch (gameType)
+	{
+	case GameObjectType::City:
+	{
+		++mCities;
+		return newGameObject = CreateCity(s_hash("City" + std::to_string(mIdentify)), pEngine, startPosition);
+	}
+	case GameObjectType::Explosion:
+		return newGameObject = CreateExplosion(s_hash("Explosion" + std::to_string(mIdentify)), pEngine, startPosition);
+	default:
+		std::cout << "Wrong type" << std::endl;
+		return nullptr;
+	}
+}
+
+GameObject* Factory::CreateMissiles(exEngineInterface* pEngine, exVector2 startPosition, exVector2 finalPosition, GameObjectType gameType) 
+{
+	GameObject* newGameObject;
+	++mIdentify;
+	switch (gameType)
+	{
+	case GameObjectType::MissileFriend:
+	{
+		--Factory::mMissiliesAvailable;
+		exColor friendColor;
+		friendColor.SetColor(255, 255, 255, 255);
+		return newGameObject = CreateMissile(s_hash("Missile" + std::to_string(mIdentify)), pEngine, startPosition, finalPosition, friendColor, false, GameObjectType::MissileFriend);
+	}
+	case GameObjectType::MissileEnemy:
+	{
+		exColor enemyColor;
+		enemyColor.SetColor(200, 0, 20, 255);
+		return newGameObject = CreateMissile(s_hash("MissileEnemy" + std::to_string(mIdentify)), pEngine, startPosition, finalPosition, enemyColor, true, GameObjectType::MissileEnemy);
+	}
+	default:
+		std::cout << "Wrong type" << std::endl;
+		return nullptr;
+	}
+}
+
+GameObject* Factory::CreateExplosion(Hash hash, exEngineInterface* pEngine, exVector2 startPosition)
+{
+	exColor explosionColor;
+	explosionColor.mColor[0] = 255;
+	explosionColor.mColor[1] = 255;
+	explosionColor.mColor[2] = 196;
+	explosionColor.mColor[3] = 255;
+
+	float Radius = 40.0f;
+
+	GameObject* explosion = new GameObject(hash);
+
+	COGTransform* pTransform = new COGTransform(explosion, startPosition);
+	explosion->AddComponent(pTransform);
+
+	COGExplosion* pExplosion = new COGExplosion(pEngine, explosion, pTransform, startPosition, explosionColor);
+	explosion->AddComponent(pExplosion);
+
+	COGExplosionController* pExplosionController = new COGExplosionController(explosion, pTransform, Radius);
+	explosion->AddComponent(pExplosionController);
+
+	COGPhysics* pPhysics = new COGPhysics(explosion, true, GameObjectType::Explosion);
+	explosion->AddComponent(pPhysics);
+
+	explosion->Initialize();
+
+	return explosion;
+}
+
 void Factory::addToStaleList(GameObject* gameObject)
 {
 	if (gameObject->GetHandle().IsValid())
 	{
+		if (gameObject->FindComponent<COGBoxShape>(ComponentType::BoxShape) != nullptr)
+		{
+			--mCities;
+		}
 		mStaleGameObjects.push_back(gameObject);
 	}
 }
